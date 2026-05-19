@@ -1,0 +1,152 @@
+Segment_ID,Entity_Type,Avg_Revenue,Optimization_Focus,Target_Saving_Pct,Estimated_Segment_Benefit,Arden_Shield_Eligibility
+SEG-001,LLC,3877029.09,Section 41 (R&D Credits),0.0741,287169.78,High
+SEG-002,C-Corp,2125980.97,Section 168(k) (Bonus Depreciation),0.0675,143525.63,High
+SEG-003,S-Corp,1317503.77,Section 41 (R&D Credits),0.0436,57451.25,Medium
+SEG-004,C-Corp,4984406.67,Section 41 (R&D Credits),0.0667,332293.79,High
+SEG-004,C-Corp,4984406.67,Energy Efficient Commercial Bldgs (179D),0.0411,204958.21,Medium
+SEG-005,LLC,1996817.28,Section 168(k) (Bonus Depreciation),0.033,65801.86,Medium
+SEG-005,LLC,1996817.28,Section 199A (QBI),0.0679,135638.71,High
+SEG-006,C-Corp,304676.11,Energy Efficient Commercial Bldgs (179D),0.0519,15799.54,High
+SEG-006,C-Corp,304676.11,Work Opportunity Tax Credit,0.0577,17585.48,High
+SEG-007,LLC,2075226.9,Energy Efficient Commercial Bldgs (179D),0.0595,123520.48,High
+SEG-008,LLC,3482482.64,Work Opportunity Tax Credit,0.0734,255458.45,High
+SEG-009,S-Corp,227433.76,Section 174 (Software Dev),0.0256,5828.64,Medium
+SEG-009,S-Corp,227433.76,Section 199A (QBI),0.027,6142.43,Medium
+SEG-010,Sole Proprietorship,1903326.73,Work Opportunity Tax Credit,0.0715,136180.45,High
+SEG-010,Sole Proprietorship,1903326.73,Energy Efficient Commercial Bldgs (179D),0.04,76052.24,Medium
+SEG-011,Sole Proprietorship,2133801.12,Section 174 (Software Dev),0.0775,165378.41,High
+SEG-012,S-Corp,988846.92,Energy Efficient Commercial Bldgs (179D),0.0678,67057.12,High
+SEG-012,S-Corp,988846.92,Section 199A (QBI),0.0619,61193.36,High
+SEG-013,S-Corp,4908697.33,Section 174 (Software Dev),0.062,304398.42,High
+SEG-013,S-Corp,4908697.33,Section 179 (Expensing),0.0667,327263.47,High
+SEG-014,C-Corp,3126323.96,Section 168(k) (Bonus Depreciation),0.0492,153851.9,Medium
+SEG-014,C-Corp,3126323.96,Work Opportunity Tax Credit,0.0662,206983.94,High
+SEG-015,Sole Proprietorship,2804873.62,Work Opportunity Tax Credit,0.0212,59464.46,Medium
+SEG-016,C-Corp,2673587.54,Section 168(k) (Bonus Depreciation),0.0611,163448.29,High
+SEG-017,C-Corp,1365472.29,Section 179 (Expensing),0.0351,47917.66,Medium
+SEG-018,LLC,2231387.03,Section 179 (Expensing),0.0459,102358.03,Medium
+SEG-018,LLC,2231387.03,Energy Efficient Commercial Bldgs (179D),0.0777,173441.99,High
+SEG-019,Sole Proprietorship,1337675.84,Section 168(k) (Bonus Depreciation),0.0408,54614.99,Medium
+SEG-020,Sole Proprietorship,3446011.83,Section 199A (QBI),0.0485,167145.68,Medium
+SEG-020,Sole Proprietorship,3446011.83,Work Opportunity Tax Credit,0.0316,108968.99,Medium
+SEG-021,LLC,2270475.13,Section 168(k) (Bonus Depreciation),0.0679,154267.76,High
+SEG-022,LLC,2418722.12,Section 41 (R&D Credits),0.0478,115526.61,Medium
+SEG-022,LLC,2418722.12,Work Opportunity Tax Credit,0.0396,95746.01,Medium
+SEG-023,LLC,1415444.2,Section 174 (Software Dev),0.0232,32773.42,Medium
+SEG-023,LLC,1415444.2,Section 199A (QBI),0.0348,49197.02,Medium
+SEG-024,C-Corp,2226150.03,Section 179 (Expensing),0.0499,110995.98,Medium
+SEG-024,C-Corp,2226150.03,Section 174 (Software Dev),0.0625,139184.89,High
+SEG-025,S-Corp,4297250.83,Section 168(k) (Bonus Depreciation),0.0791,339913.86,High
+SEG-025,S-Corp,4297250.83,Energy Efficient Commercial Bldgs (179D),0.0498,214092.38,Medium
+SEG-026,S-Corp,1914053.07,Energy Efficient Commercial Bldgs (179D),0.0644,123305.27,High
+SEG-027,LLC,3062327.99,Section 199A (QBI),0.0276,84627.83,Medium
+SEG-027,LLC,3062327.99,Work Opportunity Tax Credit,0.0767,234767.32,High
+SEG-028,Sole Proprietorship,386584.85,Section 168(k) (Bonus Depreciation),0.0325,12577.74,Medium
+SEG-029,S-Corp,277170.46,Energy Efficient Commercial Bldgs (179D),0.0529,14674.95,High
+SEG-029,S-Corp,277170.46,Work Opportunity Tax Credit,0.0363,10052.64,Medium
+SEG-030,S-Corp,1071038.14,Work Opportunity Tax Credit,0.0624,66839.14,High
+SEG-031,S-Corp,3651025.91,Section 179 (Expensing),0.0482,176089.87,Medium
+SEG-032,S-Corp,4946747.82,Section 199A (QBI),0.0577,285650.39,High
+SEG-033,C-Corp,1824585.41,Section 179 (Expensing),0.0612,111681.67,High
+SEG-033,C-Corp,1824585.41,Section 199A (QBI),0.0255,46518.55,Medium
+SEG-034,C-Corp,3476356.55,Section 199A (QBI),0.0525,182562.14,High
+SEG-035,LLC,1754997.56,Section 174 (Software Dev),0.0258,45225.88,Medium
+SEG-035,LLC,1754997.56,Section 41 (R&D Credits),0.0605,106153.86,High
+SEG-036,C-Corp,1835381.67,Section 41 (R&D Credits),0.0233,42749.42,Medium
+SEG-037,C-Corp,3087148.27,Section 199A (QBI),0.0241,74324.26,Medium
+SEG-038,Sole Proprietorship,3377536.73,Section 174 (Software Dev),0.0613,207140.82,High
+SEG-038,Sole Proprietorship,3377536.73,Energy Efficient Commercial Bldgs (179D),0.0574,193863.19,High
+SEG-039,Sole Proprietorship,2301992.39,Energy Efficient Commercial Bldgs (179D),0.052,119620.86,High
+SEG-040,Sole Proprietorship,4458123.6,Section 168(k) (Bonus Depreciation),0.0774,345119.75,High
+SEG-040,Sole Proprietorship,4458123.6,Work Opportunity Tax Credit,0.053,236224.74,High
+SEG-041,LLC,1750341.93,Section 174 (Software Dev),0.0385,67447.52,Medium
+SEG-041,LLC,1750341.93,Section 41 (R&D Credits),0.0478,83702.64,Medium
+SEG-042,Sole Proprietorship,1220048.44,Section 199A (QBI),0.0656,80081.78,High
+SEG-042,Sole Proprietorship,1220048.44,Section 168(k) (Bonus Depreciation),0.0714,87121.74,High
+SEG-043,LLC,2204025.95,Work Opportunity Tax Credit,0.046,101312.15,Medium
+SEG-044,S-Corp,3975705.66,Section 168(k) (Bonus Depreciation),0.0257,102135.62,Medium
+SEG-045,C-Corp,3586947.95,Work Opportunity Tax Credit,0.0771,276708.79,High
+SEG-045,C-Corp,3586947.95,Section 168(k) (Bonus Depreciation),0.0498,178601.69,Medium
+SEG-046,C-Corp,3662754.02,Section 199A (QBI),0.0246,89931.86,Medium
+SEG-047,C-Corp,954854.56,Section 199A (QBI),0.0653,62346.14,High
+SEG-048,S-Corp,3198022.1,Energy Efficient Commercial Bldgs (179D),0.0751,240300.39,High
+SEG-048,S-Corp,3198022.1,Section 41 (R&D Credits),0.0291,93039.08,Medium
+SEG-049,S-Corp,1535825.06,Section 199A (QBI),0.0337,51770.79,Medium
+SEG-049,S-Corp,1535825.06,Work Opportunity Tax Credit,0.0377,57938.09,Medium
+SEG-050,S-Corp,3454159.36,Energy Efficient Commercial Bldgs (179D),0.052,179772.94,High
+SEG-051,Sole Proprietorship,1202047.38,Energy Efficient Commercial Bldgs (179D),0.0703,84478.8,High
+SEG-052,LLC,770160.37,Section 179 (Expensing),0.0387,29773.98,Medium
+SEG-052,LLC,770160.37,Section 168(k) (Bonus Depreciation),0.0739,56919.62,High
+SEG-053,S-Corp,719792.37,Section 168(k) (Bonus Depreciation),0.0263,18925.14,Medium
+SEG-053,S-Corp,719792.37,Work Opportunity Tax Credit,0.0221,15895.64,Medium
+SEG-054,LLC,2848221.08,Work Opportunity Tax Credit,0.0216,61553.39,Medium
+SEG-054,LLC,2848221.08,Energy Efficient Commercial Bldgs (179D),0.0503,143384.79,High
+SEG-055,S-Corp,2197331.6,Section 168(k) (Bonus Depreciation),0.0617,135605.96,High
+SEG-056,LLC,3833589.57,Section 41 (R&D Credits),0.0371,142081.29,Medium
+SEG-057,LLC,4845772.8,Section 199A (QBI),0.0389,188558.11,Medium
+SEG-057,LLC,4845772.8,Section 174 (Software Dev),0.03,145386.38,Medium
+SEG-058,S-Corp,4260621.8,Section 174 (Software Dev),0.0494,210569.25,Medium
+SEG-058,S-Corp,4260621.8,Section 41 (R&D Credits),0.0374,159555.22,Medium
+SEG-059,Sole Proprietorship,2721466.88,Section 168(k) (Bonus Depreciation),0.0628,170894.88,High
+SEG-059,Sole Proprietorship,2721466.88,Section 199A (QBI),0.0462,125725.4,Medium
+SEG-060,C-Corp,4913308.82,Section 179 (Expensing),0.0205,100484.69,Medium
+SEG-060,C-Corp,4913308.82,Section 41 (R&D Credits),0.0751,368949.97,High
+SEG-061,C-Corp,4251333.77,Section 179 (Expensing),0.0697,296276.34,High
+SEG-062,LLC,4692784.8,Work Opportunity Tax Credit,0.0244,114521.46,Medium
+SEG-062,LLC,4692784.8,Section 199A (QBI),0.0481,225651.93,Medium
+SEG-063,LLC,1953420.65,Section 41 (R&D Credits),0.0753,147159.72,High
+SEG-063,LLC,1953420.65,Energy Efficient Commercial Bldgs (179D),0.0471,92065.25,Medium
+SEG-064,LLC,3169451.34,Section 199A (QBI),0.0493,156200.52,Medium
+SEG-065,LLC,2791332.01,Section 168(k) (Bonus Depreciation),0.025,69651.97,Medium
+SEG-066,LLC,4648335.09,Section 168(k) (Bonus Depreciation),0.044,204457.86,Medium
+SEG-066,LLC,4648335.09,Section 199A (QBI),0.0775,360072.34,High
+SEG-067,LLC,3830677.68,Section 168(k) (Bonus Depreciation),0.0714,273551.24,High
+SEG-068,LLC,1922275.49,Section 174 (Software Dev),0.0787,151281.09,High
+SEG-068,LLC,1922275.49,Section 41 (R&D Credits),0.0352,67585.16,Medium
+SEG-069,C-Corp,3930126.75,Section 199A (QBI),0.0267,104857.84,Medium
+SEG-070,S-Corp,824908.46,Section 199A (QBI),0.0545,44997.37,High
+SEG-070,S-Corp,824908.46,Section 168(k) (Bonus Depreciation),0.0764,63035.61,High
+SEG-071,C-Corp,2999676.63,Energy Efficient Commercial Bldgs (179D),0.0346,103679.47,Medium
+SEG-071,C-Corp,2999676.63,Section 168(k) (Bonus Depreciation),0.0649,194820.84,High
+SEG-072,LLC,1641533.75,Section 179 (Expensing),0.0754,123801.82,High
+SEG-072,LLC,1641533.75,Energy Efficient Commercial Bldgs (179D),0.0676,110911.56,High
+SEG-073,Sole Proprietorship,4827914.15,Section 199A (QBI),0.0605,291956.46,High
+SEG-073,Sole Proprietorship,4827914.15,Section 41 (R&D Credits),0.0251,121300.02,Medium
+SEG-074,LLC,1647044.93,Section 174 (Software Dev),0.0385,63380.6,Medium
+SEG-075,S-Corp,1764706.06,Section 179 (Expensing),0.058,102377.18,High
+SEG-075,S-Corp,1764706.06,Section 174 (Software Dev),0.0312,54977.14,Medium
+SEG-076,LLC,124172.29,Work Opportunity Tax Credit,0.039,4837.73,Medium
+SEG-076,LLC,124172.29,Section 199A (QBI),0.0381,4727.42,Medium
+SEG-077,C-Corp,1008178.01,Section 168(k) (Bonus Depreciation),0.0722,72787.85,High
+SEG-078,C-Corp,1033941.82,Section 41 (R&D Credits),0.0702,72594.31,High
+SEG-078,C-Corp,1033941.82,Section 179 (Expensing),0.0593,61350.66,High
+SEG-079,C-Corp,3527198.16,Section 41 (R&D Credits),0.0497,175453.95,Medium
+SEG-079,C-Corp,3527198.16,Energy Efficient Commercial Bldgs (179D),0.0641,225946.44,High
+SEG-080,S-Corp,4887344.5,Section 199A (QBI),0.0653,319034.59,High
+SEG-081,LLC,2890529.0,Section 174 (Software Dev),0.0574,165792.24,High
+SEG-082,LLC,2140121.33,Section 41 (R&D Credits),0.0624,133559.65,High
+SEG-082,LLC,2140121.33,Section 199A (QBI),0.0486,104042.16,Medium
+SEG-083,C-Corp,4451845.47,Section 41 (R&D Credits),0.0263,117017.94,Medium
+SEG-084,Sole Proprietorship,1042349.16,Section 199A (QBI),0.0454,47273.69,Medium
+SEG-084,Sole Proprietorship,1042349.16,Section 168(k) (Bonus Depreciation),0.0615,64152.05,High
+SEG-085,Sole Proprietorship,1579750.82,Section 174 (Software Dev),0.0588,92904.89,High
+SEG-086,LLC,3072326.2,Work Opportunity Tax Credit,0.0615,189079.9,High
+SEG-086,LLC,3072326.2,Section 199A (QBI),0.0788,242054.61,High
+SEG-087,C-Corp,4182083.8,Work Opportunity Tax Credit,0.0585,244712.67,High
+SEG-087,C-Corp,4182083.8,Section 179 (Expensing),0.0596,249085.06,High
+SEG-088,S-Corp,1783398.29,Section 179 (Expensing),0.0258,46043.69,Medium
+SEG-088,S-Corp,1783398.29,Section 174 (Software Dev),0.0231,41210.25,Medium
+SEG-089,Sole Proprietorship,356391.07,Section 179 (Expensing),0.0451,16063.7,Medium
+SEG-090,C-Corp,344637.08,Energy Efficient Commercial Bldgs (179D),0.0419,14448.2,Medium
+SEG-091,S-Corp,3107813.94,Section 41 (R&D Credits),0.069,214509.85,High
+SEG-092,Sole Proprietorship,1900916.62,Section 174 (Software Dev),0.0324,61510.32,Medium
+SEG-092,Sole Proprietorship,1900916.62,Section 41 (R&D Credits),0.0771,146634.77,High
+SEG-093,Sole Proprietorship,2540983.96,Section 179 (Expensing),0.0481,122299.84,Medium
+SEG-094,C-Corp,3742297.4,Energy Efficient Commercial Bldgs (179D),0.0381,142557.55,Medium
+SEG-095,Sole Proprietorship,437134.52,Section 179 (Expensing),0.0783,34239.93,High
+SEG-095,Sole Proprietorship,437134.52,Section 168(k) (Bonus Depreciation),0.0298,13026.57,Medium
+SEG-096,S-Corp,1194225.63,Work Opportunity Tax Credit,0.0792,94592.27,High
+SEG-097,S-Corp,778903.78,Work Opportunity Tax Credit,0.0657,51178.96,High
+SEG-098,Sole Proprietorship,4867817.54,Section 168(k) (Bonus Depreciation),0.031,151120.19,Medium
+SEG-099,Sole Proprietorship,1460228.24,Section 174 (Software Dev),0.0299,43603.1,Medium
+SEG-100,S-Corp,604330.45,Section 174 (Software Dev),0.0681,41182.26,High

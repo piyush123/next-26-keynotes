@@ -1,23 +1,18 @@
 #!/bin/bash
 # =============================================================================
-# BigQuery Setup Script — Furniture Inventory & Sales Data Architecture
+# BigQuery Setup Script — QuickBooks Tax Optimization Data Architecture
 #
-# This script creates the dataset, tables, and a "Dead Stock" detection view
+# This script creates the dataset, tables, and a "Optimization Health" view
 # as described in bq_dataset.md.
-#
-# Prerequisites:
-#   - Google Cloud SDK (gcloud / bq CLI) installed and authenticated
-#   - A GCP project set via:  gcloud config set project <PROJECT_ID>
-#     or pass --project_id=<PROJECT_ID> to every bq command
 # =============================================================================
 
 set -euo pipefail
 
 # ---------------------------------------------------------------------------
-# Configuration — edit these to match your environment
+# Configuration
 # ---------------------------------------------------------------------------
 PROJECT_ID="${GCP_PROJECT_ID:-$(gcloud config get-value project 2>/dev/null)}"
-DATASET="unified_intelligence_fabric_demo"
+DATASET="quickbooks_tax_intelligence_demo"
 LOCATION="${BQ_LOCATION:-US}"
 
 if [[ -z "${PROJECT_ID}" ]]; then
@@ -27,14 +22,14 @@ if [[ -z "${PROJECT_ID}" ]]; then
 fi
 
 echo "============================================="
-echo " BigQuery Setup"
+echo " BigQuery Setup — QuickBooks Tax"
 echo " Project : ${PROJECT_ID}"
 echo " Dataset : ${DATASET}"
 echo " Location: ${LOCATION}"
 echo "============================================="
 
 # ---------------------------------------------------------------------------
-# 1. Create the dataset (if it does not already exist)
+# 1. Create the dataset
 # ---------------------------------------------------------------------------
 echo ""
 echo ">>> Checking / creating dataset '${DATASET}' ..."
@@ -45,162 +40,104 @@ else
   bq --project_id="${PROJECT_ID}" mk \
     --dataset \
     --location="${LOCATION}" \
-    --description="Furniture Inventory & Sales demo dataset for Unified Intelligence Fabric" \
+    --description="QuickBooks Tax Optimization demo dataset" \
     "${DATASET}"
   echo "    Dataset '${DATASET}' created."
 fi
 
 # ---------------------------------------------------------------------------
-# 2. Create the furniture_stock table
+# 2. Create the tax_returns table
 # ---------------------------------------------------------------------------
-TABLE_STOCK="${DATASET}.furniture_stock"
+TABLE_RETURNS="${DATASET}.tax_returns"
 
 echo ""
-echo ">>> Creating table '${TABLE_STOCK}' ..."
-
-# JSON schema is required for nested RECORD fields (bq CLI does not support
-# inline RECORD() syntax).
-SCHEMA_FILE=$(mktemp /tmp/furniture_stock_schema.XXXXXX.json)
-cat > "${SCHEMA_FILE}" <<'SCHEMA'
-[
-  {"name": "sku",               "type": "STRING",    "mode": "REQUIRED"},
-  {"name": "warehouse_id",      "type": "STRING",    "mode": "REQUIRED"},
-  {"name": "product_name",      "type": "STRING"},
-  {"name": "category",          "type": "STRING"},
-  {"name": "collection",        "type": "STRING"},
-  {"name": "material",          "type": "STRING"},
-  {"name": "style_tags",        "type": "STRING",    "mode": "REPEATED"},
-  {"name": "unit_cost",         "type": "NUMERIC"},
-  {"name": "clearance_price",   "type": "NUMERIC"},
-  {"name": "competitor_price",  "type": "NUMERIC"},
-  {"name": "suggested_price",   "type": "NUMERIC"},
-  {"name": "quantity_on_hand",  "type": "INT64"},
-  {"name": "quantity_reserved", "type": "INT64"},
-  {"name": "dimensions",        "type": "RECORD", "fields": [
-    {"name": "length_cm", "type": "FLOAT64"},
-    {"name": "width_cm",  "type": "FLOAT64"},
-    {"name": "height_cm", "type": "FLOAT64"},
-    {"name": "weight_kg", "type": "FLOAT64"}
-  ]},
-  {"name": "received_date",     "type": "DATE"},
-  {"name": "last_updated",      "type": "TIMESTAMP"}
-]
-SCHEMA
+echo ">>> Creating table '${TABLE_RETURNS}' ..."
 
 bq --project_id="${PROJECT_ID}" mk \
   --table \
-  --description="Tracks real-time inventory levels and physical specifications" \
-  "${TABLE_STOCK}" \
-  "${SCHEMA_FILE}" \
+  --description="Tracks customer tax filings and financial snapshots" \
+  "${TABLE_RETURNS}" \
+  'return_id:STRING,
+   customer_id:STRING,
+   tax_year:INT64,
+   entity_type:STRING,
+   total_revenue:NUMERIC,
+   total_expenses:NUMERIC,
+   rd_expenses:NUMERIC,
+   state_of_filing:STRING,
+   status:STRING,
+   last_updated:TIMESTAMP' \
   2>/dev/null \
-  && echo "    Table '${TABLE_STOCK}' created." \
-  || echo "    Table '${TABLE_STOCK}' already exists — skipping."
-
-rm -f "${SCHEMA_FILE}"
+  && echo "    Table '${TABLE_RETURNS}' created." \
+  || echo "    Table '${TABLE_RETURNS}' already exists — skipping."
 
 # ---------------------------------------------------------------------------
-# 3. Create the furniture_sales table
+# 3. Create the tax_optimizations table
 # ---------------------------------------------------------------------------
-TABLE_SALES="${DATASET}.furniture_sales"
+TABLE_OPTIMIZATIONS="${DATASET}.tax_optimizations"
 
 echo ""
-echo ">>> Creating table '${TABLE_SALES}' ..."
+echo ">>> Creating table '${TABLE_OPTIMIZATIONS}' ..."
 
 bq --project_id="${PROJECT_ID}" mk \
   --table \
-  --description="Records every transaction to provide a pulse on market demand" \
-  "${TABLE_SALES}" \
-  'sale_id:STRING,
-   sku:STRING,
-   warehouse_id:STRING,
-   sale_timestamp:TIMESTAMP,
-   quantity_sold:INT64,
-   sale_price:NUMERIC' \
+  --description="Identified opportunities for tax savings" \
+  "${TABLE_OPTIMIZATIONS}" \
+  'optimization_id:STRING,
+   return_id:STRING,
+   code_section:STRING,
+   description:STRING,
+   estimated_savings:NUMERIC,
+   confidence_score:NUMERIC,
+   mcp_source:STRING' \
   2>/dev/null \
-  && echo "    Table '${TABLE_SALES}' created." \
-  || echo "    Table '${TABLE_SALES}' already exists — skipping."
+  && echo "    Table '${TABLE_OPTIMIZATIONS}' created." \
+  || echo "    Table '${TABLE_OPTIMIZATIONS}' already exists — skipping."
 
 # ---------------------------------------------------------------------------
-# 4. Create the dead_stock_view
-#    Flags items as Healthy / Slow-Moving / Dead Stock based on days since
-#    the last sale (or items that have never sold).
+# 4. Create the optimization_health_view
 # ---------------------------------------------------------------------------
-VIEW_DEAD_STOCK="${DATASET}.dead_stock_view"
+VIEW_OPTIMIZATION_HEALTH="${DATASET}.optimization_health_view"
 
 echo ""
-echo ">>> Creating view '${VIEW_DEAD_STOCK}' ..."
+echo ">>> Creating view '${VIEW_OPTIMIZATION_HEALTH}' ..."
 
 bq --project_id="${PROJECT_ID}" mk \
   --use_legacy_sql=false \
   --view "
 SELECT
-  s.sku,
-  s.warehouse_id,
-  s.product_name,
-  s.category,
-  s.collection,
-  s.material,
-  s.style_tags,
-  s.unit_cost,
-  s.clearance_price,
-  s.competitor_price,
-  s.suggested_price,
-  s.quantity_on_hand,
-  s.quantity_reserved,
-  (s.quantity_on_hand - s.quantity_reserved)                       AS available_stock,
-  s.dimensions.length_cm,
-  s.dimensions.width_cm,
-  s.dimensions.height_cm,
-  s.dimensions.weight_kg,
-  ROUND(s.dimensions.length_cm
-      * s.dimensions.width_cm
-      * s.dimensions.height_cm, 2)                                AS volume_cm3,
-  s.received_date,
-  last_sale.last_sale_date,
-  COALESCE(
-    DATE_DIFF(CURRENT_DATE(), last_sale.last_sale_date, DAY),
-    DATE_DIFF(CURRENT_DATE(), s.received_date, DAY)
-  )                                                               AS days_since_last_sale,
+  r.customer_id,
+  r.entity_type,
+  o.optimization_id,
+  o.return_id,
+  o.code_section,
+  o.description,
+  o.estimated_savings,
+  o.confidence_score,
   CASE
-    WHEN last_sale.last_sale_date IS NULL
-      THEN 'Dead Stock'
-    WHEN DATE_DIFF(CURRENT_DATE(), last_sale.last_sale_date, DAY) <= 60
-      THEN 'Healthy'
-    WHEN DATE_DIFF(CURRENT_DATE(), last_sale.last_sale_date, DAY) <= 120
-      THEN 'Slow-Moving'
-    ELSE 'Dead Stock'
-  END                                                             AS stock_health_tier,
+    WHEN o.confidence_score >= 0.9 THEN 'High Confidence'
+    WHEN o.confidence_score >= 0.7 THEN 'Medium Confidence'
+    ELSE 'High Risk'
+  END AS risk_tier,
   CASE
-    WHEN last_sale.last_sale_date IS NULL
-      THEN 'Never sold since received — immediate clearance recommended'
-    WHEN DATE_DIFF(CURRENT_DATE(), last_sale.last_sale_date, DAY) <= 60
-      THEN 'Maintain current replenishment levels'
-    WHEN DATE_DIFF(CURRENT_DATE(), last_sale.last_sale_date, DAY) <= 120
-      THEN 'Consider floor-space reorganization or 10% discounts'
-    ELSE 'Immediate clearance or liquidation to free up space'
-  END                                                             AS recommendation
+    WHEN o.confidence_score >= 0.9 THEN 'Automatic application in Arden Tax Shield'
+    WHEN o.confidence_score >= 0.7 THEN 'Requires CPA-review flag'
+    ELSE 'Requires manual evidence gathering'
+  END AS recommendation,
+  o.mcp_source
 FROM
-  \`${PROJECT_ID}.${DATASET}.furniture_stock\` AS s
-LEFT JOIN (
-  SELECT
-    sku,
-    warehouse_id,
-    DATE(MAX(sale_timestamp)) AS last_sale_date
-  FROM
-    \`${PROJECT_ID}.${DATASET}.furniture_sales\`
-  GROUP BY
-    sku, warehouse_id
-) AS last_sale
-  ON  s.sku          = last_sale.sku
-  AND s.warehouse_id = last_sale.warehouse_id
+  \`${PROJECT_ID}.${DATASET}.tax_optimizations\` AS o
+JOIN
+  \`${PROJECT_ID}.${DATASET}.tax_returns\` AS r
+  ON o.return_id = r.return_id
 ORDER BY
-  days_since_last_sale DESC
+  o.estimated_savings DESC
 " \
-  --description="Automatically flags items by stock health tier (Healthy / Slow-Moving / Dead Stock)" \
-  "${VIEW_DEAD_STOCK}" \
+  --description="Classifies tax optimizations by risk tier and providing recommendations" \
+  "${VIEW_OPTIMIZATION_HEALTH}" \
   2>/dev/null \
-  && echo "    View '${VIEW_DEAD_STOCK}' created." \
-  || echo "    View '${VIEW_DEAD_STOCK}' already exists — skipping."
+  && echo "    View '${VIEW_OPTIMIZATION_HEALTH}' created." \
+  || echo "    View '${VIEW_OPTIMIZATION_HEALTH}' already exists — skipping."
 
 # ---------------------------------------------------------------------------
 # Done
@@ -208,13 +145,9 @@ ORDER BY
 echo ""
 echo "============================================="
 echo " Setup complete!"
-echo ""
 echo " Resources created in ${PROJECT_ID}:"
 echo "   • ${DATASET}                  (dataset)"
-echo "   • ${TABLE_STOCK}     (table)"
-echo "   • ${TABLE_SALES}     (table)"
-echo "   • ${VIEW_DEAD_STOCK}  (view)"
-echo ""
-echo " Next steps:"
-echo "   bq query --use_legacy_sql=false 'SELECT * FROM \`${PROJECT_ID}.${VIEW_DEAD_STOCK}\` LIMIT 10'"
+echo "   • ${TABLE_RETURNS}            (table)"
+echo "   • ${TABLE_OPTIMIZATIONS}       (table)"
+echo "   • ${VIEW_OPTIMIZATION_HEALTH}  (view)"
 echo "============================================="

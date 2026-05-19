@@ -99,6 +99,91 @@ _a2a_client_cache: dict[str, tuple[httpx.AsyncClient, object]] = {}
 _a2a_client_locks: dict[str, asyncio.Lock] = {}
 
 
+async def _extract_token(tool_context: ToolContext) -> str:
+    """Extracts an identity token for the current environment."""
+    from google.auth.transport.requests import Request
+
+    cached_token = tool_context.state.get("_identity_token")
+    if cached_token:
+        return cached_token
+
+    try:
+        if not _cached_adc_credentials.valid:
+            _cached_adc_credentials.refresh(Request())
+
+        token = _cached_adc_credentials.token
+        tool_context.state["_identity_token"] = token
+        return token
+    except Exception as e:
+        logger.error("Failed to extract token: %s", e)
+        return ""
+
+
+async def _send_a2a_message(endpoint_url: str, query: str) -> str:
+    """Sends a message to an A2A-compatible agent endpoint."""
+    global _a2a_client_cache, _a2a_client_locks
+
+    if endpoint_url not in _a2a_client_locks:
+        _a2a_client_locks[endpoint_url] = asyncio.Lock()
+
+    async with _a2a_client_locks[endpoint_url]:
+        if endpoint_url not in _a2a_client_cache:
+            card_url = f"{endpoint_url.rstrip('/')}/.well-known/agent-card.json"
+            client_config = ClientConfig(agent_card_url=card_url)
+            http_client = httpx.AsyncClient(timeout=httpx.Timeout(300.0))
+            a2a_client = await ClientFactory.from_config(
+                client_config, http_client=http_client
+            )
+            _a2a_client_cache[endpoint_url] = (http_client, a2a_client)
+
+        _, a2a_client = _a2a_client_cache[endpoint_url]
+
+    message = Message(role=Role.USER, parts=[Part(text=TextPart(text=query))])
+
+    try:
+        response_iter = await a2a_client.generate_content(message)
+        full_text = ""
+        async for chunk in response_iter:
+            if chunk.parts:
+                for part in chunk.parts:
+                    if part.text:
+                        full_text += part.text.text
+        return full_text
+    except Exception as e:
+        logger.exception("Error during A2A message exchange with %s", endpoint_url)
+        return f"Error: A2A communication failed: {e}"
+
+
+def _call_data_insight_agent_sync(query: str, access_token: str) -> str:
+    """Calls the BigQuery Conversational Analytics Data Agent (sync wrapper)."""
+    project_id = os.environ.get("BQ_DATA_AGENT_PROJECT")
+    agent_id = os.environ.get("BQ_DATA_AGENT_ID")
+    location = os.environ.get("BQ_DATA_AGENT_LOCATION", "global")
+
+    if not all([project_id, agent_id]):
+        return "Error: BQ_DATA_AGENT_PROJECT or BQ_DATA_AGENT_ID is not set."
+
+    url = f"https://geminidataanalytics.googleapis.com/v1/projects/{project_id}/locations/{location}/dataAgents/{agent_id}:query"
+
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json",
+    }
+
+    payload = {
+        "query": query,
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=payload, timeout=120)
+        response.raise_for_status()
+        data = response.json()
+        return data.get("answer", data.get("response", str(data)))
+    except Exception as e:
+        logger.error("Error calling BigQuery Data Agent: %s", e)
+        return f"Error: Failed to query internal data: {e}"
+
+
 async def query_regulatory_research_agent(
     query: str,
     tool_context: ToolContext,
@@ -118,8 +203,23 @@ async def query_regulatory_research_agent(
         return cached
 
     endpoint_url = os.environ.get("MARKET_RESEARCH_AGENT_URL", "")
-    if not endpoint_url:
-        return "Error: MARKET_RESEARCH_AGENT_URL is not set."
+    
+    # --- Standalone/Mock Mode Support ---
+    if not endpoint_url or endpoint_url.lower() == "mock":
+        logger.info("Standalone mode: Returning mock regulatory research data.")
+        result = (
+            "## 🔍 Regulatory Research Report: Section 174 Updates\n"
+            "**Source**: IRS.gov & Data.gov (via MCP)\n"
+            "**Key Findings**:\n"
+            "- For the " + str(_CURRENT_YEAR) + " tax year, Section 174 mandates 5-year amortization "
+            "for domestic software development costs.\n"
+            "- **De Minimis Safe Harbor**: Small businesses with less than $10M in revenue "
+            "can elect to expense up to $50,000 of these costs if tracked at the project level.\n"
+            "- **Impact**: QuickBooks users in the S-Corp segment are most affected by the new "
+            "tracking requirements."
+        )
+        tool_context.state["_regulatory_result"] = result
+        return result
 
     result = await _send_a2a_message(endpoint_url, query)
     tool_context.state["_regulatory_result"] = result
@@ -140,6 +240,23 @@ async def query_tt_coordinator(query: str, tool_context: ToolContext) -> str:
     cached = tool_context.state.get("_tt_result")
     if cached:
         return cached
+
+    project_id = os.environ.get("BQ_DATA_AGENT_PROJECT", "")
+    
+    # --- Standalone/Mock Mode Support ---
+    if not project_id or project_id.lower() == "mock":
+        logger.info("Standalone mode: Returning mock TT Coordinator analysis.")
+        result = (
+            "## 📊 TT Coordinator: Customer Segment Analysis\n"
+            "**Segment**: QuickBooks Small Business S-Corps\n"
+            "**Sample Size**: 50,000 active users\n\n"
+            "### Optimization Metrics:\n"
+            "- **Average R&D Spend**: $85,000 per user.\n"
+            "- **Potential Arden Shield Benefit**: $12,400 average tax saving per user.\n"
+            "- **Optimization Tier**: 82% of users are in the 'High Confidence' tier for Section 174."
+        )
+        tool_context.state["_tt_result"] = result
+        return result
 
     access_token = await _extract_token(tool_context)
     if not access_token:

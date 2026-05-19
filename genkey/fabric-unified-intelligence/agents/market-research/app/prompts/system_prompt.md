@@ -1,1 +1,1 @@
-Market Research Agent — performs deep web research using Gemini Deep Research to produce detailed, cited reports on market trends, competitive landscapes, and consumer sentiment analysis for a global furniture retailer.
+Market Research Agent — performs deep research on tax regulations, IRS updates, and Data.gov data to identify tax optimization opportunities for Intuit QuickBooks.
