@@ -119,3 +119,8 @@ session_type = "in_memory"
 cicd_runner = "skip"
 include_data_ingestion = false
 datastore = "none"
+
+[tool.agents-cli]
+deployment_target = "cloud_run"
+agent_directory = "app"
+template = "adk_a2a"

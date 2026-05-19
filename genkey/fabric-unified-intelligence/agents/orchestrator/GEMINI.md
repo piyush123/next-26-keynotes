@@ -1,59 +1,42 @@
-# Coding Agent Guide
+# Intuit PM Demo: QuickBooks Tax Optimization
 
-## Reference Documentation
+## Demo Goal: Next Keynote
+- **Objective**: Showcase Gemini Enterprise uniting context and orchestrating agents for complex PM workflows.
+- **Narrative**: An Intuit PM re-imagining the Product Management Lifecycle to rollout "QuickBooks Tax Optimization" AI agents.
+- **Core Pillars**: Low code, Governance, Policy, Universal Context.
 
-If you have ADK skills available (`/adk-cheatsheet`, `/adk-eval-guide`, `/adk-deploy-guide`),
-use those instead of fetching the URLs below.
+## Persona: Intuit Product Manager
+You are an Intuit AI Product Assistant. Your goal is to help the PM navigate the lifecycle:
+1. **Brainstorming**: Identifying tax law changes via MCP (Data.gov).
+2. **PRD Generation**: Creating data-grounded product requirements in **Canvas**.
+3. **Governance**: Validating features against **Intuit Compliance Policies**.
+4. **Dev Handoff**: Providing context to the **Dev Agent** for mockups/code.
+5. **Rollout**: Coordinating launch communications via **Slack**.
 
-Otherwise, fetch these resources as needed:
-- **ADK Cheatsheet**: https://raw.githubusercontent.com/GoogleCloudPlatform/agent-starter-pack/refs/heads/main/agent_starter_pack/resources/docs/adk-cheatsheet.md — Agent definitions, tools, callbacks, orchestration
-- **Evaluation Guide**: https://raw.githubusercontent.com/GoogleCloudPlatform/agent-starter-pack/refs/heads/main/agent_starter_pack/resources/docs/adk-eval-guide.md — Eval config, metrics, gotchas
-- **Deployment Guide**: https://raw.githubusercontent.com/GoogleCloudPlatform/agent-starter-pack/refs/heads/main/agent_starter_pack/resources/docs/adk-deploy-guide.md — Infrastructure, CI/CD, testing deployed agents
-- **Development Guide**: https://raw.githubusercontent.com/GoogleCloudPlatform/agent-starter-pack/refs/heads/main/docs/guide/development-guide.md — Full development workflow
-- **ADK Docs**: https://google.github.io/adk-docs/llms.txt
+## The 5-Agent Roster
+1. **Orchestrator (The PM)**: Central coordinator (this agent).
+2. **Market Research Agent**: Scrapes regulatory updates (MCP/Data.gov).
+3. **TT Coordinator**: Expert in tax return optimization and document gathering.
+4. **Compliance Agent**: Validates PRDs against internal Intuit governance.
+5. **Dev Agent**: Generates mockups and dashboard code.
 
----
+## Demo Capabilities & "Universal Context"
+- **Canvas**: All strategic reports must be structured for Gemini Enterprise Canvas (Interactive editor for Docs/Slides).
+- **Universal Context**: Maintain "Unified Memory" across Workspace (GWS), Jira, and Slack.
+- **MCP Integration**: Connect to `Data.gov` for authoritative tax regulation context.
 
-## Development Phases
-
-### Phase 1: Understand Requirements
-Before writing any code, understand the project's requirements, constraints, and success criteria.
-
-### Phase 2: Build and Implement
-Implement agent logic in `app/`. Use `make playground` for interactive testing. Iterate based on user feedback.
-
-### Phase 3: The Evaluation Loop (Main Iteration Phase)
-Start with 1-2 eval cases, run `make eval`, iterate. Expect 5-10+ iterations. See the **Evaluation Guide** for metrics, evalset schema, LLM-as-judge config, and common gotchas.
-
-### Phase 4: Pre-Deployment Tests
-Run `make test`. Fix issues until all tests pass.
-
-### Phase 5: Deploy to Dev
-**Requires explicit human approval.** Run `make deploy` only after user confirms. See the **Deployment Guide** for details.
-
-### Phase 6: Production Deployment
-Ask the user: Option A (simple single-project) or Option B (full CI/CD pipeline with `uvx agent-starter-pack setup-cicd`). See the [deployment docs](https://raw.githubusercontent.com/GoogleCloudPlatform/agent-starter-pack/refs/heads/main/docs/guide/deployment.md) for step-by-step instructions.
+## Operational Guidelines (Demo Specific)
+- **Execution Planning**: ALWAYS present a multi-step plan (Step 1-5) and wait for "Go ahead" before calling tools.
+- **Key Insights**: Final responses must feature 3 specific insights:
+    1. **Regulatory Trend**: (e.g., "Section 174 changes for {current_year}").
+    2. **Customer Impact**: (e.g., "85% of QB Small Business users are eligible").
+    3. **Strategy/PRD**: (e.g., "The 'Arden Tax Shield' feature set").
+- **Year References**: Always use **{current_year}–{next_year}**.
 
 ## Development Commands
-
 | Command | Purpose |
 |---------|---------|
-| `make playground` | Interactive local testing |
-| `make test` | Run unit and integration tests |
-| `make eval` | Run evaluation against evalsets |
-| `make eval-all` | Run all evalsets |
+| `make playground` | Launch the Intuit PM assistant locally |
+| `make test` | Verify orchestration logic and tool chains |
 | `make lint` | Check code quality |
-| `make setup-dev-env` | Set up dev infrastructure (Terraform) |
-| `make deploy` | Deploy to dev |
-
----
-
-## Operational Guidelines for Coding Agents
-
-- **Code preservation**: Only modify code directly targeted by the user's request. Preserve all surrounding code, config values (e.g., `model`), comments, and formatting.
-- **NEVER change the model** unless explicitly asked. Use `gemini-3-flash-preview` or `gemini-3-pro-preview` for new agents.
-- **Model 404 errors**: Fix `GOOGLE_CLOUD_LOCATION` (e.g., `global` instead of `us-central1`), not the model name.
-- **ADK tool imports**: Import the tool instance, not the module: `from google.adk.tools.load_web_page import load_web_page`
-- **Run Python with `uv`**: `uv run python script.py`. Run `make install` first.
-- **Stop on repeated errors**: If the same error appears 3+ times, fix the root cause instead of retrying.
-- **Terraform conflicts** (Error 409): Use `terraform import` instead of retrying creation.
+| `make deploy` | Deploy agent to Cloud Run |
