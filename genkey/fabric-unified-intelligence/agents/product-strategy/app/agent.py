@@ -128,11 +128,18 @@ def _generate_signed_url(
         bucket = storage_client.bucket(bucket_name)
         blob = bucket.blob(blob_name)
 
-        url = blob.generate_signed_url(
-            version="v4",
-            expiration=datetime.timedelta(minutes=expiration_minutes),
-            method="GET",
-        )
+        try:
+            url = blob.generate_signed_url(
+                version="v4",
+                expiration=datetime.timedelta(minutes=expiration_minutes),
+                method="GET",
+            )
+        except AttributeError:
+            logger.warning(
+                "Cannot sign GCS URL using active user credentials. "
+                "Falling back to a public GCS URL for local development."
+            )
+            url = f"https://storage.googleapis.com/{bucket_name}/{quote(blob_name, safe='/')}"
 
     logger.info(
         "Generated signed URL for gs://%s/%s (expires in %d min)",
