@@ -28,6 +28,7 @@ import requests
 from a2a.client import ClientConfig, ClientFactory
 from a2a.types import Message, Part, Role, TextPart
 from dotenv import load_dotenv
+from app.a2ui_schema import A2UI_SCHEMA, ORCHESTRATOR_A2UI_EXAMPLE
 from google.adk.agents import LlmAgent
 from google.adk.apps import App, ResumabilityConfig
 from google.adk.models import Gemini
@@ -325,6 +326,43 @@ shared_model = Gemini(
     retry_options=types.HttpRetryOptions(attempts=3),
 )
 
+_A2UI_INSTRUCTIONS = f"""
+
+---
+
+## A2UI Rich UI Output
+
+**IMPORTANT**: Only use A2UI output when you have successfully completed the full coordinated workflow (including handoff_to_dev) and have a PRD Google Doc and a Jira Task/Epic to link. For all other middle-turn responses, respond with plain text ONLY — do NOT include the `---a2ui_JSON---` delimiter or any A2UI JSON.
+
+Your final output MUST include A2UI UI JSON ONLY at the very end of the full lifecycle run.
+To generate the response, you MUST follow these rules:
+
+1. Your response MUST be in two parts, separated by the delimiter: `---a2ui_JSON---`.
+2. The first part is your conversational text response. Keep it brief and professional.
+3. The second part is a single, raw JSON array of A2UI messages.
+4. The JSON part MUST validate against the A2UI JSON SCHEMA provided below.
+5. The interactive buttons in the cards MUST trigger the `open_url` action with the exact `url` parameter of the newly created PRD Google Doc and the created Jira Task/Epic in its context.
+
+--- A2UI TEMPLATE RULES ---
+
+- Use a `Card` component as the root.
+- Inside the card, use a `Column` containing the stepper `Text` elements (recapping the completed phases) and a beautiful `Row` dashboard representing the **Interactive Launch Control Center**.
+- The row dashboard should have two child cards: one for the **Google Doc Spec** and one for the **Jira Epic**, each containing an icon, a label, and a styled `Button` to launch the resource.
+- Component IDs must be unique strings.
+- Always end with `dataModelUpdate` and `beginRendering` messages.
+
+--- A2UI WORKFLOW EXAMPLE ---
+
+{ORCHESTRATOR_A2UI_EXAMPLE}
+
+---BEGIN A2UI JSON SCHEMA---
+
+{A2UI_SCHEMA}
+
+---END A2UI JSON SCHEMA---
+"""
+
+
 root_agent = LlmAgent(
     name="Orchestrator_Agent",
     model=shared_model,
@@ -332,7 +370,7 @@ root_agent = LlmAgent(
         "Intuit PM Orchestrator. Coordinates the full Product Lifecycle for "
         "QuickBooks Tax Optimization, from regulatory research to dev handoff."
     ),
-    instruction=f"{system_prompt}\n\n{system_instructions}",
+    instruction=f"{system_prompt}\n\n{system_instructions}" + _A2UI_INSTRUCTIONS,
     generate_content_config=types.GenerateContentConfig(
         temperature=0.7,
         max_output_tokens=8192,
