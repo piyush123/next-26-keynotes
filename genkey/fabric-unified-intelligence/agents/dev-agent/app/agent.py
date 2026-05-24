@@ -24,6 +24,7 @@ import uuid
 
 from pathlib import Path
 from typing import Any, Optional
+from app.a2ui_schema import A2UI_SCHEMA, TASK_A2UI_EXAMPLE
 
 import httpx
 from dotenv import load_dotenv
@@ -803,6 +804,42 @@ def _before_tool_callback(
     return None
 
 
+_A2UI_INSTRUCTIONS = f"""
+
+---
+
+## A2UI Rich UI Output
+
+**IMPORTANT**: Only use A2UI output when you have called `create_jira_ticket`, `get_jira_ticket`, or `start_jira_ticket` and have task/ticket details to display. For all other responses, respond with plain text ONLY — do NOT include the `---a2ui_JSON---` delimiter or any A2UI JSON.
+
+Your final output MUST include A2UI UI JSON ONLY when presenting task details or creation confirmations.
+To generate the response, you MUST follow these rules:
+
+1. Your response MUST be in two parts, separated by the delimiter: `---a2ui_JSON---`.
+2. The first part is your conversational text response. Keep it brief and professional.
+3. The second part is a single, raw JSON array of A2UI messages.
+4. The JSON part MUST validate against the A2UI JSON SCHEMA provided below.
+5. The interactive button in the card MUST trigger the `start_jira_ticket` action with the exact `ticket_key` parameter (e.g., "TASK-XXXX" or "APPDEV-XX") in its context. Do NOT show the "Start Working on Task" button if the task status is already "In Progress".
+
+--- A2UI TEMPLATE RULES ---
+
+- Use a `Card` component as the root.
+- Inside the card, use a `Column` with elements: a header `Text` (h3), status `Text` (caption), description `Text` (body), and an action `Button` labeled "🚀 Start Working on Task".
+- Component IDs must be unique strings.
+- Always end with `dataModelUpdate` and `beginRendering` messages.
+
+--- A2UI TASK CARD EXAMPLE ---
+
+{TASK_A2UI_EXAMPLE}
+
+---BEGIN A2UI JSON SCHEMA---
+
+{A2UI_SCHEMA}
+
+---END A2UI JSON SCHEMA---
+"""
+
+
 root_agent = Agent(
     model=os.getenv("ADK_MODEL", "gemini-3-flash-preview"),
     name="dev_agent",
@@ -810,7 +847,7 @@ root_agent = Agent(
         "A developer assistant agent that communicates with dev teams "
         "via Google Chat, creates and manages tasks/tickets for engineering work."
     ),
-    instruction=_load_prompt("system_prompt.md"),
+    instruction=_load_prompt("system_prompt.md") + _A2UI_INSTRUCTIONS,
     before_tool_callback=_before_tool_callback,
     tools=[
         send_google_chat_message,
