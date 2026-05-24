@@ -18,6 +18,7 @@ import logging
 import os
 import pathlib
 
+from app.a2ui_schema import A2UI_SCHEMA, CITATIONS_A2UI_EXAMPLE
 import google.auth
 from dotenv import load_dotenv
 from google.adk.agents import LlmAgent
@@ -121,6 +122,42 @@ shared_model = Gemini(
     retry_options=types.HttpRetryOptions(attempts=3),
 )
 
+_A2UI_INSTRUCTIONS = f"""
+
+---
+
+## A2UI Rich UI Output
+
+**IMPORTANT**: Only use A2UI output when you have called `deep_research` and have citations/sources to present. For all other responses, respond with plain text ONLY — do NOT include the `---a2ui_JSON---` delimiter or any A2UI JSON.
+
+Your final output MUST include A2UI UI JSON ONLY when you have research sources/citations.
+To generate the response, you MUST follow these rules:
+
+1. Your response MUST be in two parts, separated by the delimiter: `---a2ui_JSON---`.
+2. The first part is your conversational text response. Keep it brief and professional.
+3. The second part is a single, raw JSON array of A2UI messages.
+4. The JSON part MUST validate against the A2UI JSON SCHEMA provided below.
+
+--- A2UI TEMPLATE RULES ---
+
+- Use a `Column` as the root containing a header `Text` (h4) and a `List` (direction: vertical) of source cards.
+- Each source should be rendered inside a `Card` containing a `Column` with a title `Text` (h5), a description `Text` (body), and a `Button` labeled with a descriptive label like "View Article" or "Open Source".
+- The button's action must be named "open_url" and have the key "url" set to the literal GCS/HTTPS website URL in its context.
+- Component IDs must be unique strings.
+- Always end with `dataModelUpdate` and `beginRendering` messages.
+
+--- A2UI CITATIONS EXAMPLE ---
+
+{CITATIONS_A2UI_EXAMPLE}
+
+---BEGIN A2UI JSON SCHEMA---
+
+{A2UI_SCHEMA}
+
+---END A2UI JSON SCHEMA---
+"""
+
+
 root_agent = LlmAgent(
     name="Market_Research_Agent",
     model=shared_model,
@@ -129,7 +166,7 @@ root_agent = LlmAgent(
         "Gemini Deep Research to produce detailed, cited reports on "
         "market trends, competitive landscapes, and consumer sentiment."
     ),
-    instruction=f"{system_prompt}\n\n{system_instructions}",
+    instruction=f"{system_prompt}\n\n{system_instructions}" + _A2UI_INSTRUCTIONS,
     generate_content_config=types.GenerateContentConfig(
         temperature=0.7,
         max_output_tokens=8192,
