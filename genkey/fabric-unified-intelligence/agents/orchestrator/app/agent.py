@@ -350,7 +350,7 @@ To generate the response, you MUST follow these rules:
 
 - Use a `Card` component as the root.
 - Inside the card, use a `Column` containing the stepper `Text` elements (recapping the completed phases) and a beautiful `Row` dashboard representing the **Interactive Launch Control Center**.
-- The row dashboard should have two child cards: one for the **Google Doc Spec** and one for the **Jira Epic**, each containing an icon, a label, and a styled `Button` to launch the resource.
+- The row dashboard should have two child cards: one for the **Google Doc Spec** and one for the **Jira Epic**, each containing a text label with a leading emoji (like 📄 or 🐛) and a styled `Button` to launch the resource. Do NOT use the `Icon` component, as it is unsupported; use emojis inside `Text` components instead.
 - Component IDs must be unique strings.
 - Always end with `dataModelUpdate` and `beginRendering` messages.
 
