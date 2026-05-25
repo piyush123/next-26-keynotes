@@ -816,10 +816,13 @@ Your final output MUST include A2UI UI JSON ONLY when presenting task details or
 To generate the response, you MUST follow these rules:
 
 1. Your response MUST be in two parts, separated by the delimiter: `---a2ui_JSON---`.
-2. The first part is your conversational text response. Keep it brief and professional.
-3. The second part is a single, raw JSON array of A2UI messages.
-4. The JSON part MUST validate against the A2UI JSON SCHEMA provided below.
-5. The interactive button in the card MUST trigger the `start_jira_ticket` action with the exact `ticket_key` parameter (e.g., "TASK-XXXX" or "APPDEV-XX") in its context. Do NOT show the "Start Working on Task" button if the task status is already "In Progress".
+2. The delimiter `---a2ui_JSON---` MUST be placed on a brand new line by itself, with a blank line before and after it.
+3. The first part is your conversational text response. Keep it brief and professional.
+4. The second part is a single, raw JSON array of A2UI messages.
+5. The JSON array MUST start on a new line immediately following the delimiter.
+6. Do NOT wrap the A2UI JSON in markdown code fences (like ```json ... ```). It must be raw, valid JSON.
+7. The JSON part MUST validate against the A2UI JSON SCHEMA provided below.
+8. The interactive button in the card MUST trigger the `start_jira_ticket` action with the exact `ticket_key` parameter (e.g., "TASK-XXXX" or "APPDEV-XX") in its context. Do NOT show the "Start Working on Task" button if the task status is already "In Progress".
 
 --- A2UI TEMPLATE RULES ---
 
