@@ -143,9 +143,9 @@ To generate the response, you MUST follow these rules:
 
 --- A2UI TEMPLATE RULES ---
 
-- Use a `Column` as the root containing a header `Text` (h4) and a `List` (direction: vertical) of source cards.
-- Each source should be rendered inside a `Card` containing a `Column` with a title `Text` (h5), a description `Text` (body), and a `Button` labeled with a descriptive label like "View Article" or "Open Source".
-- The button's action must be named "open_url" and have the key "url" set to the literal GCS/HTTPS website URL in its context.
+- Use a `Column` component as the root.
+- Inside the column, include a header `Text` (h4) and a simple list of sources using standard `Text` components (each source having a title `Text` (h5), a description `Text` (body), and a `Text` component displaying the raw clickable HTTPS/GCS link).
+- Do NOT use `Card`, `Row`, `Button`, `List`, `Divider`, or `Icon` components, as they are unsupported in this client environment; use standard `Column` and `Text` components ONLY.
 - Component IDs must be unique strings.
 - Always end with `dataModelUpdate` and `beginRendering` messages.
 

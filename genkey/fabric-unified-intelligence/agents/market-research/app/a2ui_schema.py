@@ -312,39 +312,15 @@ CITATIONS_A2UI_EXAMPLE = """
   { "surfaceUpdate": {
     "surfaceId": "research-sources",
     "components": [
-      { "id": "root", "component": { "Column": { "children": { "explicitList": ["title_label", "sources_list"] } } } },
+      { "id": "root", "component": { "Column": { "children": { "explicitList": ["title_label", "source_1_title", "source_1_desc", "source_1_url", "divider", "source_2_title", "source_2_desc", "source_2_url"] } } } },
       { "id": "title_label", "component": { "Text": { "usageHint": "h4", "text": { "literalString": "📖 Researched Sources & Citations" } } } },
-      { "id": "sources_list", "component": { "List": { "direction": "vertical", "children": { "explicitList": ["source_1_card", "source_2_card"] } } } },
-      { "id": "source_1_card", "component": { "Card": { "child": "source_1_content" } } },
-      { "id": "source_1_content", "component": { "Column": { "children": { "explicitList": ["source_1_title", "source_1_desc", "source_1_btn"] } } } },
       { "id": "source_1_title", "component": { "Text": { "usageHint": "h5", "text": { "literalString": "IRS Section 174 Amortization Updates" } } } },
       { "id": "source_1_desc", "component": { "Text": { "usageHint": "body", "text": { "literalString": "Official IRS documentation explaining the mandatory 5-year amortization rules for domestic research expenditures." } } } },
-      { "id": "source_1_btn", "component": { 
-          "Button": { 
-            "child": "source_1_btn_text", 
-            "primary": false, 
-            "action": { 
-              "name": "open_url", 
-              "context": [{ "key": "url", "value": { "literalString": "https://www.irs.gov/newsroom/irs-provides-guidance-on-amortization-of-specified-research-expenditures" } }] 
-            } 
-          } 
-      } },
-      { "id": "source_1_btn_text", "component": { "Text": { "text": { "literalString": "View Official IRS Guidance" } } } },
-      { "id": "source_2_card", "component": { "Card": { "child": "source_2_content" } } },
-      { "id": "source_2_content", "component": { "Column": { "children": { "explicitList": ["source_2_title", "source_2_desc", "source_2_btn"] } } } },
+      { "id": "source_1_url", "component": { "Text": { "usageHint": "body", "text": { "literalString": "Source Link: https://www.irs.gov/newsroom/irs-provides-guidance-on-amortization-of-specified-research-expenditures" } } } },
+      { "id": "divider", "component": { "Text": { "usageHint": "body", "text": { "literalString": "------------------------------------------------" } } } },
       { "id": "source_2_title", "component": { "Text": { "usageHint": "h5", "text": { "literalString": "CPA Journal: Impact of Section 174 on Tech Solopreneurs" } } } },
       { "id": "source_2_desc", "component": { "Text": { "usageHint": "body", "text": { "literalString": "An in-depth analysis of how software development cost capitalization impacts tax liabilities for independent consultants." } } } },
-      { "id": "source_2_btn", "component": { 
-          "Button": { 
-            "child": "source_2_btn_text", 
-            "primary": false, 
-            "action": { 
-              "name": "open_url", 
-              "context": [{ "key": "url", "value": { "literalString": "https://www.cpajournal.com/2024/02/15/impact-of-section-174-tax-changes/" } }] 
-            } 
-          } 
-      } },
-      { "id": "source_2_btn_text", "component": { "Text": { "text": { "literalString": "Read CPA Journal Article" } } } }
+      { "id": "source_2_url", "component": { "Text": { "usageHint": "body", "text": { "literalString": "Source Link: https://www.cpajournal.com/2024/02/15/impact-of-section-174-tax-changes/" } } } }
     ]
   } },
   { "dataModelUpdate": { "surfaceId": "research-sources", "path": "/", "contents": [] } }

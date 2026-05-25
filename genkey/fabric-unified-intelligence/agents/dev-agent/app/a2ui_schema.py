@@ -312,22 +312,11 @@ TASK_A2UI_EXAMPLE = """
   { "surfaceUpdate": {
     "surfaceId": "task-details",
     "components": [
-      { "id": "root", "component": { "Card": { "child": "container" } } },
-      { "id": "container", "component": { "Column": { "children": { "explicitList": ["header", "status", "desc", "action_btn"] } } } },
-      { "id": "header", "component": { "Text": { "usageHint": "h3", "text": { "literalString": "TASK-5BF820AC: Build Landing Page" } } } },
+      { "id": "root", "component": { "Column": { "children": { "explicitList": ["header", "status", "desc", "action_hint"] } } } },
+      { "id": "header", "component": { "Text": { "usageHint": "h3", "text": { "literalString": "📋 TASK-5BF820AC: Build Landing Page" } } } },
       { "id": "status", "component": { "Text": { "usageHint": "caption", "text": { "literalString": "Status: Open | Type: Task | Project: APPDEV | Assignee: Unassigned" } } } },
       { "id": "desc", "component": { "Text": { "usageHint": "body", "text": { "literalString": "Build a high-fidelity React dashboard mockup using the Intuit Design System (IDS) for sustainable tax optimization features." } } } },
-      { "id": "action_btn", "component": { 
-          "Button": { 
-            "child": "btn_text", 
-            "primary": true,
-            "action": { 
-              "name": "start_jira_ticket", 
-              "context": [{ "key": "ticket_key", "value": { "literalString": "TASK-5BF820AC" } }] 
-            } 
-          } 
-      } },
-      { "id": "btn_text", "component": { "Text": { "text": { "literalString": "🚀 Start Working on Task" } } } }
+      { "id": "action_hint", "component": { "Text": { "usageHint": "body", "text": { "literalString": "👉 Type 'Let me work on TASK-5BF820AC' in the chat to start progress!" } } } }
     ]
   } },
   { "dataModelUpdate": { "surfaceId": "task-details", "path": "/", "contents": [] } }

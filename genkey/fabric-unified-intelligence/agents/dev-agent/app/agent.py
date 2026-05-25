@@ -822,12 +822,11 @@ To generate the response, you MUST follow these rules:
 5. The JSON array MUST start on a new line immediately following the delimiter.
 6. Do NOT wrap the A2UI JSON in markdown code fences (like ```json ... ```). It must be raw, valid JSON.
 7. The JSON part MUST validate against the A2UI JSON SCHEMA provided below.
-8. The interactive button in the card MUST trigger the `start_jira_ticket` action with the exact `ticket_key` parameter (e.g., "TASK-XXXX" or "APPDEV-XX") in its context. Do NOT show the "Start Working on Task" button if the task status is already "In Progress".
-
 --- A2UI TEMPLATE RULES ---
 
-- Use a `Card` component as the root.
-- Inside the card, use a `Column` with elements: a header `Text` (h3), status `Text` (caption), description `Text` (body), and an action `Button` labeled "🚀 Start Working on Task".
+- Use a `Column` component as the root.
+- Inside the column, include a header `Text` (h3), a status `Text` (caption), a description `Text` (body), and an action hint `Text` component (instructing the user to type 'Let me work on [Task ID]' in the chat).
+- Do NOT use `Card`, `Row`, `Button`, `List`, `Divider`, or `Icon` components, as they are unsupported in this client environment; use standard `Column` and `Text` components ONLY.
 - Component IDs must be unique strings.
 - Always end with `dataModelUpdate` and `beginRendering` messages.
 

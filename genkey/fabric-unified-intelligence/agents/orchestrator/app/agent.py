@@ -344,13 +344,12 @@ To generate the response, you MUST follow these rules:
 5. The JSON array MUST start on a new line immediately following the delimiter.
 6. Do NOT wrap the A2UI JSON in markdown code fences (like ```json ... ```). It must be raw, valid JSON.
 7. The JSON part MUST validate against the A2UI JSON SCHEMA provided below.
-8. The interactive buttons in the cards MUST trigger the `open_url` action with the exact `url` parameter of the newly created PRD Google Doc and the created Jira Task/Epic in its context.
 
 --- A2UI TEMPLATE RULES ---
 
-- Use a `Card` component as the root.
-- Inside the card, use a `Column` containing the stepper `Text` elements (recapping the completed phases) and a beautiful `Row` dashboard representing the **Interactive Launch Control Center**.
-- The row dashboard should have two child cards: one for the **Google Doc Spec** and one for the **Jira Epic**, each containing a text label with a leading emoji (like 📄 or 🐛) and a styled `Button` to launch the resource. Do NOT use the `Icon` component, as it is unsupported; use emojis inside `Text` components instead.
+- Use a `Column` component as the root.
+- Inside the column, include the stepper `Text` elements (recapping the completed phases), a divider string using hyphens inside a `Text` component, a dashboard header `Text` component, and individual `Text` components for each deliverable (containing direct, clickable HTTPS links to the created Google Doc and Jira Task).
+- Do NOT use `Card`, `Row`, `Button`, `List`, `Divider`, or `Icon` components, as they are unsupported in this client environment; use standard `Column` and `Text` components ONLY.
 - Component IDs must be unique strings.
 - Always end with `dataModelUpdate` and `beginRendering` messages.
 

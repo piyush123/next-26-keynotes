@@ -312,43 +312,16 @@ ORCHESTRATOR_A2UI_EXAMPLE = """
   { "surfaceUpdate": {
     "surfaceId": "orchestrator-pipeline",
     "components": [
-      { "id": "root", "component": { "Card": { "child": "container" } } },
-      { "id": "container", "component": { "Column": { "children": { "explicitList": ["title", "step_1", "step_2", "step_3", "divider", "dashboard_title", "dashboard_row"] } } } },
+      { "id": "root", "component": { "Column": { "children": { "explicitList": ["title", "step_1", "step_2", "step_3", "step_4", "divider", "dashboard_title", "doc_link", "jira_link"] } } } },
       { "id": "title", "component": { "Text": { "usageHint": "h3", "text": { "literalString": "⚙️ PM Orchestrator Lifecycle Pipeline" } } } },
       { "id": "step_1", "component": { "Text": { "usageHint": "caption", "text": { "literalString": "[✓] Phase 1: Market Intelligence Research (Citations Ready)" } } } },
       { "id": "step_2", "component": { "Text": { "usageHint": "caption", "text": { "literalString": "[✓] Phase 2: Regulatory Compliance Scan (Validated)" } } } },
       { "id": "step_3", "component": { "Text": { "usageHint": "caption", "text": { "literalString": "[✓] Phase 3: Engineering Task Assignment (Handoff Ready)" } } } },
-      { "id": "divider", "component": { "Divider": { "axis": "horizontal" } } },
-      { "id": "dashboard_title", "component": { "Text": { "usageHint": "h4", "text": { "literalString": "🚀 Interactive Control Center" } } } },
-      { "id": "dashboard_row", "component": { "Row": { "children": { "explicitList": ["doc_card", "jira_card"] } } } },
-      { "id": "doc_card", "component": { "Card": { "child": "doc_content" } } },
-      { "id": "doc_content", "component": { "Column": { "children": { "explicitList": ["doc_text", "doc_btn"] } } } },
-      { "id": "doc_text", "component": { "Text": { "usageHint": "caption", "text": { "literalString": "📄 Google Doc PRD Spec" } } } },
-      { "id": "doc_btn", "component": { 
-          "Button": { 
-            "child": "doc_btn_text", 
-            "primary": true, 
-            "action": { 
-              "name": "open_url", 
-              "context": [{ "key": "url", "value": { "literalString": "https://docs.google.com/document/d/1KBcS5asglZswtxIdAoHMaVpi111wddEEFnnaVACR6zU/edit" } }] 
-            } 
-          } 
-      } },
-      { "id": "doc_btn_text", "component": { "Text": { "text": { "literalString": "Open Spec" } } } },
-      { "id": "jira_card", "component": { "Card": { "child": "jira_content" } } },
-      { "id": "jira_content", "component": { "Column": { "children": { "explicitList": ["jira_text", "jira_btn"] } } } },
-      { "id": "jira_text", "component": { "Text": { "usageHint": "caption", "text": { "literalString": "🐛 Jira Developer Epic" } } } },
-      { "id": "jira_btn", "component": { 
-          "Button": { 
-            "child": "jira_btn_text", 
-            "primary": false, 
-            "action": { 
-              "name": "open_url", 
-              "context": [{ "key": "url", "value": { "literalString": "https://your-org.atlassian.net/browse/TASK-5BF820AC" } }] 
-            } 
-          } 
-      } },
-      { "id": "jira_btn_text", "component": { "Text": { "text": { "literalString": "View Jira" } } } }
+      { "id": "step_4", "component": { "Text": { "usageHint": "caption", "text": { "literalString": "[✓] Phase 4: Complete Handoff Success" } } } },
+      { "id": "divider", "component": { "Text": { "usageHint": "body", "text": { "literalString": "------------------------------------------------" } } } },
+      { "id": "dashboard_title", "component": { "Text": { "usageHint": "h4", "text": { "literalString": "🚀 Coordinated Deliverables" } } } },
+      { "id": "doc_link", "component": { "Text": { "usageHint": "body", "text": { "literalString": "📄 Google Doc Spec: https://docs.google.com/document/d/1KBcS5asglZswtxIdAoHMaVpi111wddEEFnnaVACR6zU/edit" } } } },
+      { "id": "jira_link", "component": { "Text": { "usageHint": "body", "text": { "literalString": "🐛 Jira Developer Epic: https://your-org.atlassian.net/browse/TASK-5BF820AC" } } } }
     ]
   } },
   { "dataModelUpdate": { "surfaceId": "orchestrator-pipeline", "path": "/", "contents": [] } }
